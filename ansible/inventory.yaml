@@ -1,0 +1,4 @@
+awshosts:
+  hosts:
+    localhost: 
+      ansible_host: localhost
