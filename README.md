@@ -19,25 +19,23 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`
+~~Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`~~
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+~~This is an example of how you may give instructions on setting up your project locally.~~
 
 ### Prerequisites
 
 An AWS EC2 ubuntu instance
+A domain (optional)
 
 ### Installation
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
-
-
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -47,9 +45,17 @@ An AWS EC2 ubuntu instance
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Feature 1
-- [ ] Feature 2
-- [ ] Feature 3
+- [ ] Remove things from readme template that I do need
+- [ ] Document server setup steps
+  - [ ] Document installing ansible on server
+- [ ] Document installation of required applications
+  - [ ] django
+  - [ ] gunicorn
+  - [ ] nginx/apache
+  - [ ] docker if I end up containerizing this
+- [ ] document how to run the api endpoint
+  - [ ] include steps to setup env file if necessary
+  - [ ] include steps on how to access the api endpoints both locally (on AWS) and remotely
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
