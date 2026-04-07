@@ -1,4 +1,6 @@
-awshosts:
-  hosts:
-    localhost:
-      ansible_connection=local
+all:
+  children:
+    ungrouped:
+      hosts:
+        localhost:
+          ansible_connection: local
