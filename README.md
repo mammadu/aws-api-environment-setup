@@ -30,10 +30,16 @@
 
 ### Prerequisites
 
-An AWS EC2 ubuntu instance
-A domain (optional)
+- An AWS EC2 ubuntu instance
+- AWS elastic ip address (optional, it makes testing out different instances simpler)
+- Ansible for ubuntu (see the [official ansible installation guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
+- A domain (optional)
 
 ### Installation
+
+1. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
+2. [Install Ansible on ubuntu EC2 instance](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
+3. 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
