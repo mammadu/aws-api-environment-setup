@@ -1,5 +1,6 @@
 - name: Provision AWS server locally
   hosts: local
+  become: true
   tasks:
    - name: Update package list
      ansible.builtin.apt:
