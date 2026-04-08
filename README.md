@@ -37,9 +37,10 @@
 
 ### Installation
 
-1. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
-2. [Install Ansible on ubuntu EC2 instance](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
-3. 
+1. [Install Ansible on ubuntu EC2 instance](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
+2. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
+3. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
+4. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
