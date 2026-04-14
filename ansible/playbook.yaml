@@ -33,6 +33,8 @@
             state: link
         - name: install certificates from certbot
           ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }}"
+        - name: test nginx configuration
+          ansible.builtin.shell: "sudo nginx -t"
         - name: reload nginx
           ansible.bultin.systemd_service:
             name: nginx
