@@ -1,2 +1,4 @@
 
 domain: YOUR_DOMAIN.COM # the domain for your website
+app_server_address: # the address of the app_server
+app_server_port: # the port of the app_server
