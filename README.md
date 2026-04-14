@@ -42,13 +42,8 @@
 3. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
 4. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
 5. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
-6. install tls/ssl certs
-    1. use tools like cloudflare to [certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip) to generate certificate files
-7. Setup nginx
-    1. adjust the firewall
-        1. Allow specific apps through the firewall: `sudo ufw allow 'Openssh' 'Nginx Full'`
-        2. enable the firewall: `sudo ufw enable`
-  1. setup configuration files
+6. install gunicorn and start the application server
+    1. if your using django, you can install gunicorn in the same virtual environment as django. Most django applications will have a `wsgi.py` file you can use to start the gunicorn server. For example, assuming your django project name is `mysite` and you are in root of your django repo, using `gunicorn mysite.wsgi` will start the gunicorn server
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
