@@ -43,12 +43,12 @@
 4. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
 5. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
 6. install tls/ssl certs
-  1. use tools like cloudflare to [certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip) to generate certificate files
+    1. use tools like cloudflare to [certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip) to generate certificate files
 7. Setup nginx
-  1. adjust the firewall
-    1. Allow specific apps through the firewall: `sudo ufw allow 'Openssh' 'Nginx Full'`
-    2. enable the firewall: `sudo ufw enable`
-  2. setup configuration files
+    1. adjust the firewall
+        1. Allow specific apps through the firewall: `sudo ufw allow 'Openssh' 'Nginx Full'`
+        2. enable the firewall: `sudo ufw enable`
+  1. setup configuration files
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
