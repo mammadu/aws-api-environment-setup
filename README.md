@@ -19,14 +19,12 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-~~Here's a blank template to get started. To avoid retyping too much info, do a search and replace with your text editor for the following: `github_username`, `repo_name`, `twitter_handle`, `linkedin_username`, `email_client`, `email`, `project_title`, `project_description`, `project_license`~~
+This repo configures an aws ec2 instance to be setup as an api server. It primarily uses ansible to configure the environment. The file `ansible/variables.yaml` is used to update project specific variables during configuration
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- GETTING STARTED -->
 ## Getting Started
-
-~~This is an example of how you may give instructions on setting up your project locally.~~
 
 ### Prerequisites
 
@@ -41,8 +39,9 @@
 2. navigate to the repo: `cd aws-api-environment-setup/`
 3. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
 4. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
-5. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
-6. install gunicorn and start the application server
+5. modify `variables.yaml` to replace the domain and email variables along with any other custom variables
+6. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
+7. install gunicorn and start the application server
     1. if your using django, you can install gunicorn in the same virtual environment as django. Most django applications will have a `wsgi.py` file you can use to start the gunicorn server. For example, assuming your django project name is `mysite` and you are in root of your django repo, using `gunicorn mysite.wsgi` will start the gunicorn server
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -55,15 +54,16 @@
 <!-- ROADMAP -->
 ## Roadmap
 
-- [ ] Remove things from readme template that I do need
-- [ ] Document server setup steps
-  - [ ] Document installing ansible on server
-- [ ] Document installation of required applications
+- [x] Remove things from readme template that I do need
+- [x] Document server setup steps
+  - [x] Document installing ansible on server
+- [x] Document installation of required applications
   - [ ] django
-  - [ ] gunicorn
-  - [ ] nginx/apache
+  - [x] gunicorn
+  - [x] nginx/apache
+  - [ ] postgresql
   - [ ] docker if I end up containerizing this
-- [ ] document how to run the api endpoint
+- [x] document how to run the api endpoint
   - [ ] include steps to setup env file if necessary
   - [ ] include steps on how to access the api endpoints both locally (on AWS) and remotely
 
