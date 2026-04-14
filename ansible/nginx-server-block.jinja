@@ -5,7 +5,7 @@ server {
     server_name {{ domain }} www.{{ domain }};
 
     location / {
-        proxy_pass {{ app_server_address}}:{{ app_server_port }};
-        include proxy_params
+        proxy_pass http://{{ app_server_address}}:{{ app_server_port }};
+        include proxy_params;
     }
 }
