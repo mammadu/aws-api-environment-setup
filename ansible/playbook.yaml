@@ -29,7 +29,7 @@
         - name: create symlink between sites-available and sites-enabled for server block
           ansible.builtin.file:
             src: /etc/nginx/sites-available/{{ domain }}
-            dest: /etc/nginx/sites-enabled/
+            dest: /etc/nginx/sites-enabled/{{ domain }}
             state: link
         - name: install certificates from certbot
           ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }}"
