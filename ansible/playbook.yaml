@@ -2,7 +2,7 @@
   hosts: local
   become: true
   vars_files:
-    - 
+    - ansible/variables.yaml
   tasks:
     - name: Update package list
       ansible.builtin.apt:
