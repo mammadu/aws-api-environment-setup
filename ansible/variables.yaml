@@ -1,3 +1,4 @@
 domain: your_domain.com # the domain for your website
 app_server_address: localhost # the address of the app_server
 app_server_port: 8000 # the port of the app_server
+email: your_email@email.com # email address for important certbot notifications
