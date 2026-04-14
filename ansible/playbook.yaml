@@ -20,5 +20,13 @@
           - python3-certbot-nginx
         state: present
 
+    - name: configure nginx
+      block:
+        - name: copy nginx server block to sites-available
+          ansible.builtin.template:
+            src: nginx-server-block.jinja
+            dest: /etc/nginx/sites-available/{{ domain }}
+
+
     - name: install certificates from certbot
       ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }}"
