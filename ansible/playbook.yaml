@@ -1,6 +1,8 @@
 - name: Provision AWS server locally
   hosts: local
   become: true
+  vars_files:
+    - 
   tasks:
     - name: Update package list
       ansible.builtin.apt:
@@ -12,15 +14,10 @@
         name:
           - python3-pip
           - python3-venv
-          - libaugeas-dev # for certbot
           - nginx
           - postgresql
+          - certbot python3-certbot-nginx
         state: present
 
     - name: install certificates from certbot
-      ansible.builtin.shell: |
-        sudo python3 -m venv /opt/certbot/
-        sudo /opt/certbot/bin/pip install --upgrade pip
-        sudo /opt/certbot/bin/pip install certbot certbot-nginx
-        sudo ln -s /opt/certbot/bin/certbot /usr/local/bin/certbot
-        sudo certbot --nginx
+      ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }}"
