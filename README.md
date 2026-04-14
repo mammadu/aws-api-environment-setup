@@ -31,15 +31,24 @@
 ### Prerequisites
 
 - An AWS EC2 ubuntu instance
+  - make sure your security group has inbound rules allowing http (port 80), https (port 443) and ssh (port 22) for source 0.0.0.0/0
 - AWS elastic ip address for your AWS EC2 instance(optional, it makes testing out different instances simpler)
 - A domain (optional)
 
 ### Installation
 
 1. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
-2. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
-3. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
-4. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
+2. navigate to the repo: `cd aws-api-environment-setup/`
+3. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
+4. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
+5. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
+6. install tls/ssl certs
+  1. use tools like cloudflare to [certbot](https://certbot.eff.org/instructions?ws=nginx&os=pip) to generate certificate files
+7. Setup nginx
+  1. adjust the firewall
+    1. Allow specific apps through the firewall: `sudo ufw allow 'Openssh' 'Nginx Full'`
+    2. enable the firewall: `sudo ufw enable`
+  2. setup configuration files
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
