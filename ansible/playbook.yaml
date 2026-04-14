@@ -36,6 +36,6 @@
         - name: test nginx configuration
           ansible.builtin.shell: "sudo nginx -t"
         - name: reload nginx
-          ansible.bultin.systemd_service:
+          ansible.builtin.systemd_service:
             name: nginx
             state: reloaded
