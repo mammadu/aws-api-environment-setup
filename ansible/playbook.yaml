@@ -2,7 +2,7 @@
   hosts: local
   become: true
   vars_files:
-    - ansible/variables.yaml
+    - variables.yaml
   tasks:
     - name: Update package list
       ansible.builtin.apt:
@@ -16,7 +16,8 @@
           - python3-venv
           - nginx
           - postgresql
-          - certbot python3-certbot-nginx
+          - certbot
+          - python3-certbot-nginx
         state: present
 
     - name: install certificates from certbot
