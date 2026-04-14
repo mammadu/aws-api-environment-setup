@@ -20,6 +20,12 @@
           - python3-certbot-nginx
         state: present
 
+    - name: configure ufw
+      ansible.builtin.shell: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
+
+    - name: enable ufw
+      ansible.builtin.shell: "sudo ufw enable"
+
     - name: configure nginx
       block:
         - name: copy nginx server block to sites-available
