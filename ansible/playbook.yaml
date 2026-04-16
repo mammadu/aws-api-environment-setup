@@ -29,6 +29,7 @@
           ansible.builtin.shell: "sudo ufw --force enable"
 
     - name: configure nginx
+      tags: nginx
       block:
         - name: copy nginx server block to sites-available
           ansible.builtin.template:
