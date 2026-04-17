@@ -48,6 +48,8 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 <!-- USAGE EXAMPLES -->
 ## Usage
 
+### Running a test server
+
 You should now have a django-ninja project in `~/myproject` (replace `myproject` with your actual project name)
 From your project directory, activate your virtual environment like so: `source env/bin/activate`
 To start the test server: `python manage.py runserver`
@@ -55,12 +57,32 @@ To access your api, you can use curl the specific endpoints: `curl your_domain.c
 
 From here you can start building your api
 
+At a basic level you can instantiate a `NinjaAPI` object in urls.py, but best practice is:
+
+- To make an app for the api using `python manage.py startapp APPNAME` from inside the virtual environment.
+- Make a file called `APPNAME_api.py`. Create a `NinjaAPI` object in this file
+- Add the apps file to your `INSTALLED_APPS` in the settings.py. e.g. `APPNAME.apps.AppnameConfig`
+- In your urlconf add `from APPNAME.api import api` to your imports and add `path('api/', api.urls)` in the url_patterns in your urlconf
+- If necessary, add models to `APPNAME/models.py`
+- You can then start defining schemas and endpoints in your `APPNAME/api.py` file
+
+### Running a production server
+
 For production, make sure to update the file `~/myproject/settings.py`
+
 - set `DEBUG = False`
 - update the value of `SECRET_KEY`
 
 To start a production server you can run `python -m gunicorn -w $(lscpu -e=CPU | wc -l) myproject.asgi -k uvicorn_worker.UvicornWorker`.
+
 - `$(lscpu -e=CPU | wc -l` should get you an optimal amount of workers
+
+## Testing
+
+For testing, you will have to grant your database user, (i.e.{{ db_user }} in the variables.yaml file) createdb privileges. To do this
+
+1. enter psql: `sudo -u postgres psql`
+2. grant your user privileges: `ALTER USER db_user CREATEDB;`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -85,6 +107,9 @@ Certbot modifies the nginx configuration so that http requests are redirected to
 - [x] document how to run the api endpoint
   - [x] include steps to setup env file if necessary
   - [x] include steps on how to access the api endpoints both locally (on AWS) and remotely
+- [ ] automate granting your user privileges: `ALTER USER db_user CREATEDB;`
+- [ ] split ansible tasks into roles
+- [ ] automate setup for api file structure as described in [Running a test server](#running-a-test-server)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
