@@ -25,6 +25,7 @@
       block:
         - name: allow openssh and nginx full
           ansible.builtin.shell: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
+
         - name: enable ufw
           ansible.builtin.shell: "sudo ufw --force enable"
 
@@ -35,16 +36,43 @@
           ansible.builtin.template:
             src: nginx-server-block.jinja
             dest: /etc/nginx/sites-available/{{ domain }}
+
         - name: create symlink between sites-available and sites-enabled for server block
           ansible.builtin.file:
             src: /etc/nginx/sites-available/{{ domain }}
             dest: /etc/nginx/sites-enabled/{{ domain }}
             state: link
+
         - name: install certificates from certbot
           ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }} -m {{ email }} --agree-tos -n"
+
         - name: test nginx configuration
           ansible.builtin.shell: "sudo nginx -t"
+
         - name: reload nginx
           ansible.builtin.systemd_service:
             name: nginx
             state: reloaded
+
+    - name: configure postgres
+      tags: postgres
+      block:
+        - name: create the database user
+          community.postgresql.postgresql_user:
+            login_db: {{ db_name }}
+            name: {{ db_user }}
+            password: {{ db_user_password }}
+            configuration:
+              client_encoding: utf8
+              default_transaction_isolation: read committed
+              timezone: {{ timezone }}
+
+        - name: create the database
+          community.postgresql.postgresql_db:
+            name: {{ db_name }}
+            owner: {{ db_user }}
+
+
+    # - name: setup django
+    #   tags: django
+    #   block:
