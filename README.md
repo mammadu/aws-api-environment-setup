@@ -41,7 +41,7 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 4. Navigate to the ansible folder in the repo: `cd ansible`
 5. Copy `variables.yaml.template` to file `variables.yaml`: `cp variables.yaml.template variables.yaml`
 6. Modify `variables.yaml` to replace the domain and email variables along with any other pertinent variables
-7. Use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
+7. Use ansible to configure the server: `ansible-playbook -v -i inventory.ini playbook.yaml`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
