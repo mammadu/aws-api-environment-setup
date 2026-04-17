@@ -126,3 +126,9 @@
             command: migrate
             project_path: "{{ django_project_dir.path }}"
             virtualenv: "{{ virtual_env.virtualenv }}"
+
+        # - name: start test server
+        #   community.general.django_manage:
+        #     command: runserver
+        #     project_path: "{{ django_project_dir.path }}"
+        #     virtualenv: "{{ virtual_env.virtualenv }}"
