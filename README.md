@@ -38,7 +38,7 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 1. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
 2. navigate to the repo: `cd aws-api-environment-setup/`
 3. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
-4. navigate to the ansible folder in the repo: `cd aws-api-environment-setup/ansible`
+4. navigate to the ansible folder in the repo: `cd ansible`
 5. copy `variables.yaml.template` to file `variables.yaml`.Modify `variables.yaml` to replace the domain and email variables along with any other pertinent variables
 6. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
 7. install gunicorn and start the application server
