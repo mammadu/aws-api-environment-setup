@@ -62,18 +62,18 @@
       block:
         - name: create the database user
           community.postgresql.postgresql_user:
-            login_db: {{ db_name }}
-            name: {{ db_user }}
-            password: {{ db_user_password }}
+            login_db: "{{ db_name }}"
+            name: "{{ db_user }}"
+            password: "{{ db_user_password }}"
             configuration:
               client_encoding: utf8
               default_transaction_isolation: read committed
-              timezone: {{ timezone }}
+              timezone: "{{ timezone }}"
 
         - name: create the database
           community.postgresql.postgresql_db:
-            name: {{ db_name }}
-            owner: {{ db_user }}
+            name: "{{ db_name }}"
+            owner: "{{ db_user }}"
 
 
     # - name: setup django
