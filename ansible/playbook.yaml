@@ -29,10 +29,10 @@
       tags: ufw
       block:
         - name: allow openssh and nginx full
-          ansible.builtin.shell: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
+          ansible.builtin.command: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
 
         - name: enable ufw
-          ansible.builtin.shell: "sudo ufw --force enable"
+          ansible.builtin.command: "sudo ufw --force enable"
 
     - name: configure nginx
       tags: nginx
@@ -49,10 +49,10 @@
             state: link
 
         - name: install certificates from certbot
-          ansible.builtin.shell: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }} -m {{ email }} --agree-tos -n"
+          ansible.builtin.command: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }} -m {{ email }} --agree-tos -n"
 
         - name: test nginx configuration
-          ansible.builtin.shell: "sudo nginx -t"
+          ansible.builtin.command: "sudo nginx -t"
 
         - name: reload nginx
           ansible.builtin.systemd_service:
@@ -77,7 +77,32 @@
             name: "{{ db_name }}"
             owner: "{{ db_user }}"
 
-
     - name: setup django
       tags: django
+      become: false
       block:
+        - name: create project directory
+          ansible.builtin.file:
+            path: ~/{{ django_project }}/
+            state: directory
+          register: django_project_dir
+
+        - name: create virtual environment in directory and install modules
+          ansible.builtin.pip:
+            chdir: "{{ django_project_dir.path }}"
+            virtualenv: env
+            virtualenv_command: python3 -m venv
+            name:
+              - django-ninja
+              - uvicorn
+              - uvicorn-worker
+              - gunicorn
+              - psycopg[binary]
+          register: virtual_env
+
+        - name: create a django project
+          ansible.builtin.command:
+            chdir: "{{ django_project_dir.path }}"
+            cmd: "{{ virtual_env.virtualenv }}/bin/django-admin startproject {{ django_project }} {{ django_project_dir.path }}"
+
+        # - name: configure settings.py
