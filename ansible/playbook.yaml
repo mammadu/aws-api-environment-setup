@@ -4,21 +4,24 @@
   vars_files:
     - variables.yaml
   tasks:
-    - name: Update package list
-      ansible.builtin.apt:
-        update_cache: yes
-        cache_valid_time: 3600
+    - name: initial host setup
+      tags: setup
+      block:
+        - name: Update package list
+          ansible.builtin.apt:
+            update_cache: yes
+            cache_valid_time: 3600
 
-    - name: install packages
-      ansible.builtin.apt:
-        name:
-          - python3-pip
-          - python3-venv
-          - nginx
-          - postgresql
-          - certbot
-          - python3-certbot-nginx
-        state: present
+        - name: install packages
+          ansible.builtin.apt:
+            name:
+              - python3-pip
+              - python3-venv
+              - nginx
+              - postgresql
+              - certbot
+              - python3-certbot-nginx
+            state: present
 
     - name: configure ufw
       tags: ufw
