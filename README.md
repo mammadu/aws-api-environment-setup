@@ -49,17 +49,14 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 ## Usage
 
 You should now have a django-ninja project in `~/myproject` (replace `myproject` with your actual project name)
-
 From your project directory, activate your virtual environment like so: `source env/bin/activate`
-
 To start the test server: `python manage.py runserver`
-
-To access your api, you can use curl the specific endpoints: `curl your_domain.com/api/hello`
+To access your api, you can use curl the specific endpoints: `curl your_domain.com/api/hello` (`your_domain.com` could be your actual domain or localhost depending on your settings)
 
 From here you can start building your api
 
 For production, make sure to update the file `~/myproject/settings.py`
-- set `DEBUG = True`
+- set `DEBUG = False`
 - update the value of `SECRET_KEY`
 
 To start a production server you can run `python -m gunicorn -w $(lscpu -e=CPU | wc -l) myproject.asgi -k uvicorn_worker.UvicornWorker`.
