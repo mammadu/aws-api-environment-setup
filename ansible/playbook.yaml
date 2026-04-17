@@ -21,6 +21,7 @@
               - postgresql
               - certbot
               - python3-certbot-nginx
+              - python3-psycopg
             state: present
 
     - name: configure ufw
