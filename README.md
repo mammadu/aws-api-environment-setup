@@ -29,26 +29,47 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 ### Prerequisites
 
 - An AWS EC2 ubuntu instance
-  - make sure your security group has inbound rules allowing http (port 80), https (port 443) and ssh (port 22) for source 0.0.0.0/0
+  - Make sure your security group has inbound rules allowing http (port 80), https (port 443) and ssh (port 22) for source 0.0.0.0/0
 - AWS elastic ip address for your AWS EC2 instance(optional, it makes testing out different instances simpler)
 - A domain (optional)
 
 ### Installation
 
-1. clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
-2. navigate to the repo: `cd aws-api-environment-setup/`
+1. Clone this repo to the EC2 instance: `git clone https://github.com/mammadu/aws-api-environment-setup.git`
+2. Navigate to the repo: `cd aws-api-environment-setup/`
 3. Install Ansible on ubuntu EC2 instance using either install script in repo `install-ansible.sh` or by following [this ansible guide](https://docs.ansible.com/projects/ansible/latest/installation_guide/installation_distros.html#installing-ansible-on-ubuntu)
-4. navigate to the ansible folder in the repo: `cd ansible`
-5. copy `variables.yaml.template` to file `variables.yaml`: `cp variables.yaml.template variables.yaml`
+4. Navigate to the ansible folder in the repo: `cd ansible`
+5. Copy `variables.yaml.template` to file `variables.yaml`: `cp variables.yaml.template variables.yaml`
 6. Modify `variables.yaml` to replace the domain and email variables along with any other pertinent variables
-7. use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
-8. install gunicorn and start the application server
-    1. if your using django, you can install gunicorn in the same virtual environment as django. Most django applications will have a `wsgi.py` file you can use to start the gunicorn server. For example, assuming your django project name is `mysite` and you are in root of your django repo, using `gunicorn mysite.wsgi` will start the gunicorn server
+7. Use ansible to configure the server: `ansible-playbook -i inventory.ini playbook.yaml`
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- USAGE EXAMPLES -->
 ## Usage
+
+You should now have a django-ninja project in `~/myproject` (replace `myproject` with your actual project name)
+
+From your project directory, activate your virtual environment like so: `source env/bin/activate`
+
+To start the test server: `python manage.py runserver`
+
+To access your api, you can use curl the specific endpoints: `curl your_domain.com/api/hello`
+
+From here you can start building your api
+
+For production, make sure to update the file `~/myproject/settings.py`
+- set `DEBUG = True`
+- update the value of `SECRET_KEY`
+
+To start a production server you can run `python -m gunicorn -w $(lscpu -e=CPU | wc -l) myproject.asgi -k uvicorn_worker.UvicornWorker`.
+- `$(lscpu -e=CPU | wc -l` should get you an optimal amount of workers
+
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+## Troubleshooting
+
+Certbot modifies the nginx configuration so that http requests are redirected to https (using HTTP response 301). This can cause POSTS to become GETS so it may be beneficial to modify the nginx configuration to change the 301 repsone to a 308 response - see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/301
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
@@ -59,14 +80,14 @@ This repo configures an aws ec2 instance to be setup as an api server. It primar
 - [x] Document server setup steps
   - [x] Document installing ansible on server
 - [x] Document installation of required applications
-  - [ ] django
+  - [x] django
   - [x] gunicorn
   - [x] nginx/apache
-  - [ ] postgresql
+  - [x] postgresql
   - [ ] docker if I end up containerizing this
 - [x] document how to run the api endpoint
-  - [ ] include steps to setup env file if necessary
-  - [ ] include steps on how to access the api endpoints both locally (on AWS) and remotely
+  - [x] include steps to setup env file if necessary
+  - [x] include steps on how to access the api endpoints both locally (on AWS) and remotely
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
