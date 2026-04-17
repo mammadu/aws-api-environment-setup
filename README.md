@@ -84,11 +84,15 @@ For testing, you will have to grant your database user, (i.e.{{ db_user }} in th
 1. enter psql: `sudo -u postgres psql`
 2. grant your user privileges: `ALTER USER db_user CREATEDB;`
 
+Otherwise, define your tests in `APPNAME/tests.py`. Run your tests with `python manage.py tests`. See https://docs.djangoproject.com/en/6.0/intro/tutorial05/ for more details
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 ## Troubleshooting
 
 Certbot modifies the nginx configuration so that http requests are redirected to https (using HTTP response 301). This can cause POSTS to become GETS so it may be beneficial to modify the nginx configuration to change the 301 repsone to a 308 response - see https://developer.mozilla.org/en-US/docs/Web/HTTP/Reference/Status/301
+
+Certbot will also rate limit you if you get too many certificates in a short period of time, see https://letsencrypt.org/docs/staging-environment/
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
