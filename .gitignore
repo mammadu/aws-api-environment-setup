@@ -206,5 +206,6 @@ marimo/_static/
 marimo/_lsp/
 __marimo__/
 
-# variable files for ansible
+# ansible
 */variables.yaml
+ansible.log
