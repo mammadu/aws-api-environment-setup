@@ -29,7 +29,7 @@
       tags: ufw
       block:
         - name: allow openssh and nginx full
-          ansible.builtin.command: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
+          ansible.builtin.shell: 'for app in "OpenSSH" "Nginx Full"; do sudo ufw allow "$app"; done'
 
         - name: enable ufw
           ansible.builtin.command: "sudo ufw --force enable"
@@ -104,5 +104,25 @@
           ansible.builtin.command:
             chdir: "{{ django_project_dir.path }}"
             cmd: "{{ virtual_env.virtualenv }}/bin/django-admin startproject {{ django_project }} {{ django_project_dir.path }}"
+            creates: "{{ django_project_dir.path }}/manage.py"
 
-        # - name: configure settings.py
+        - name: check template destination path
+          ansible.builtin.debug:
+            msg: "{{django_project_dir.path}}{{django_project}}/settings.py"
+
+        - name: configure settings.py
+          ansible.builtin.template:
+            src: settings.py.jinja
+            dest: "{{django_project_dir.path}}{{django_project}}/settings.py"
+
+        - name: makemigrations
+          community.general.django_manage:
+            command: makemigrations
+            project_path: "{{ django_project_dir.path }}"
+            virtualenv: "{{ virtual_env.virtualenv }}"
+
+        - name: migrate
+          community.general.django_manage:
+            command: migrate
+            project_path: "{{ django_project_dir.path }}"
+            virtualenv: "{{ virtual_env.virtualenv }}"
