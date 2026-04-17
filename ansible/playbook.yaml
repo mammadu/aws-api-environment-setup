@@ -78,6 +78,6 @@
             owner: "{{ db_user }}"
 
 
-    # - name: setup django
-    #   tags: django
-    #   block:
+    - name: setup django
+      tags: django
+      block:
