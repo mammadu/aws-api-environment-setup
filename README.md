@@ -77,7 +77,7 @@ To start a production server you can run `python -m gunicorn -w $(lscpu -e=CPU |
 
 - `$(lscpu -e=CPU | wc -l` should get you an optimal amount of workers
 
-## Testing
+### Testing
 
 For testing, you will have to grant your database user, (i.e.{{ db_user }} in the variables.yaml file) createdb privileges. To do this
 
