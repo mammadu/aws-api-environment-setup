@@ -49,7 +49,10 @@
             state: link
 
         - name: install certificates from certbot
-          ansible.builtin.command: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }} -m {{ email }} --agree-tos -n"
+          tags: certbot
+          ansible.builtin.command:
+            cmd: "sudo certbot --nginx -d {{ domain }} -d www.{{ domain }} -m {{ email }} --agree-tos -n"
+            creates: "/etc/letsencrypt/live/{{ domain }}"
 
         - name: test nginx configuration
           ansible.builtin.command: "sudo nginx -t"
