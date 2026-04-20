@@ -109,10 +109,6 @@
             cmd: "{{ virtual_env.virtualenv }}/bin/django-admin startproject {{ django_project }} {{ django_project_dir.path }}"
             creates: "{{ django_project_dir.path }}/manage.py"
 
-        - name: check template destination path
-          ansible.builtin.debug:
-            msg: "{{django_project_dir.path}}{{django_project}}/settings.py"
-
         - name: configure settings.py
           ansible.builtin.template:
             src: settings.py.jinja
