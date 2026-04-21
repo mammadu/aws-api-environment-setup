@@ -94,6 +94,8 @@ Certbot modifies the nginx configuration so that http requests are redirected to
 
 Certbot will also rate limit you if you get too many certificates in a short period of time, see https://letsencrypt.org/docs/staging-environment/
 
+if your domain is behind cloudflare, the ip addresses saved to the nginx log will be the cloudflare ip address. To fix this, you'll have to modify the nginx config so that every cloudflare address is replaced by X-Forwarded-For. For details, see this [cloudflare guide](https://developers.cloudflare.com/support/troubleshooting/restoring-visitor-ips/restoring-original-visitor-ips/#nginx-1)
+
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
 
 <!-- ROADMAP -->
