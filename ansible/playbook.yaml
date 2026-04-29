@@ -80,54 +80,61 @@
             name: "{{ db_name }}"
             owner: "{{ db_user }}"
 
-    - name: setup django
-      tags: django
-      become: false
-      block:
-        - name: create project directory
-          ansible.builtin.file:
-            path: ~/{{ django_project }}/
-            state: directory
-          register: django_project_dir
+    - name: create .env file
+      tags: .env
+      ansible.builtin.template:
+        src: .env.jinja
+        dest: .env
+      
 
-        - name: create virtual environment in directory and install modules
-          ansible.builtin.pip:
-            chdir: "{{ django_project_dir.path }}"
-            virtualenv: env
-            virtualenv_command: python3 -m venv
-            name:
-              - django-ninja
-              - uvicorn
-              - uvicorn-worker
-              - gunicorn
-              - psycopg[binary]
-          register: virtual_env
+    # - name: setup django
+    #   tags: django
+    #   become: false
+    #   block:
+    #     - name: create project directory
+    #       ansible.builtin.file:
+    #         path: ~/{{ django_project }}/
+    #         state: directory
+    #       register: django_project_dir
 
-        - name: create a django project
-          ansible.builtin.command:
-            chdir: "{{ django_project_dir.path }}"
-            cmd: "{{ virtual_env.virtualenv }}/bin/django-admin startproject {{ django_project }} {{ django_project_dir.path }}"
-            creates: "{{ django_project_dir.path }}/manage.py"
+    #     - name: create virtual environment in directory and install modules
+    #       ansible.builtin.pip:
+    #         chdir: "{{ django_project_dir.path }}"
+    #         virtualenv: env
+    #         virtualenv_command: python3 -m venv
+    #         name:
+    #           - django-ninja
+    #           - uvicorn
+    #           - uvicorn-worker
+    #           - gunicorn
+    #           - psycopg[binary]
+    #       register: virtual_env
 
-        - name: configure settings.py
-          ansible.builtin.template:
-            src: settings.py.jinja
-            dest: "{{django_project_dir.path}}{{django_project}}/settings.py"
+    #     - name: create a django project
+    #       ansible.builtin.command:
+    #         chdir: "{{ django_project_dir.path }}"
+    #         cmd: "{{ virtual_env.virtualenv }}/bin/django-admin startproject {{ django_project }} {{ django_project_dir.path }}"
+    #         creates: "{{ django_project_dir.path }}/manage.py"
 
-        - name: makemigrations
-          community.general.django_manage:
-            command: makemigrations
-            project_path: "{{ django_project_dir.path }}"
-            virtualenv: "{{ virtual_env.virtualenv }}"
+    #     - name: configure settings.py
+    #       ansible.builtin.template:
+    #         src: settings.py.jinja
+    #         dest: "{{django_project_dir.path}}{{django_project}}/settings.py"
 
-        - name: migrate
-          community.general.django_manage:
-            command: migrate
-            project_path: "{{ django_project_dir.path }}"
-            virtualenv: "{{ virtual_env.virtualenv }}"
+    #     - name: makemigrations
+    #       community.general.django_manage:
+    #         command: makemigrations
+    #         project_path: "{{ django_project_dir.path }}"
+    #         virtualenv: "{{ virtual_env.virtualenv }}"
 
-        # - name: start test server
-        #   community.general.django_manage:
-        #     command: runserver
-        #     project_path: "{{ django_project_dir.path }}"
-        #     virtualenv: "{{ virtual_env.virtualenv }}"
+    #     - name: migrate
+    #       community.general.django_manage:
+    #         command: migrate
+    #         project_path: "{{ django_project_dir.path }}"
+    #         virtualenv: "{{ virtual_env.virtualenv }}"
+
+    #     # - name: start test server
+    #     #   community.general.django_manage:
+    #     #     command: runserver
+    #     #     project_path: "{{ django_project_dir.path }}"
+    #     #     virtualenv: "{{ virtual_env.virtualenv }}"
